@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public class SupabaseStorageUtil {
 
-    // Reemplaza con tus credenciales de Supabase
-    private static final String SUPABASE_URL = "https://nosmllupbhkcvxcizkkz.supabase.co/rest/v1/";
+    // URL base de Supabase (sin /rest/v1/)
+    private static final String SUPABASE_URL = "https://nosmllupbhkcvxcizkkz.supabase.co";
     private static final String SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5vc21sbHVwYmhrY3Z4Y2l6a2t6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk0ODI5NzMsImV4cCI6MjEwNTA1ODk3M30.GpO3-tkCOAKr6CbOIgY0SzXM01TvYh8tFb5cYSaB440";
 
     /**
@@ -22,6 +22,7 @@ public class SupabaseStorageUtil {
         }
         String fileName = UUID.randomUUID().toString() + ext;
 
+        // Endpoint correcto de Supabase Storage: https://PROJECT.supabase.co/storage/v1/object/BUCKET/FILENAME
         String uploadEndpoint = SUPABASE_URL + "/storage/v1/object/" + bucketName + "/" + fileName;
 
         URL url = new URL(uploadEndpoint);
@@ -43,7 +44,7 @@ public class SupabaseStorageUtil {
 
         int responseCode = conn.getResponseCode();
         if (responseCode == 200 || responseCode == 201) {
-            // Devuelve la URL pública para almacenar en la base de datos
+            // Devuelve la URL pública del archivo en Supabase Storage
             return SUPABASE_URL + "/storage/v1/object/public/" + bucketName + "/" + fileName;
         } else {
             throw new RuntimeException("Error al subir archivo a Supabase Storage. HTTP Code: " + responseCode);
