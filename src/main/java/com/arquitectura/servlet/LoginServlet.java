@@ -44,7 +44,8 @@ public class LoginServlet extends HttpServlet {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            req.setAttribute("error", "Error al conectar con la base de datos.");
+            // Imprime el mensaje de error SQL exacto en la vista para diagnóstico preciso
+            req.setAttribute("error", "Error BD: " + e.getMessage());
             req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
     }
