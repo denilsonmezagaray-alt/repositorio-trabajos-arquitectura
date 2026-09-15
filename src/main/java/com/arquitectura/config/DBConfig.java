@@ -6,19 +6,19 @@ import java.sql.SQLException;
 
 public class DBConfig {
 
-    // Configuración JDBC con los 4 formatos de usuario del pooler de Supabase
+    // Formatos de conexión exactos para Supabase Pooler Session / Transaction
     private static final String[] DB_URLS = {
+        "jdbc:postgresql://postgres.nosmllupbhkcvxcizkkz:lJAGTrWVICfSlXyZ@aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require",
+        "jdbc:postgresql://postgres.nosmllupbhkcvxcizkkz:lJAGTrWVICfSlXyZ@aws-0-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require",
         "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:5432/postgres?sslmode=require",
-        "jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require",
-        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require",
-        "jdbc:postgresql://aws-0-us-west-1.pooler.supabase.com:6543/postgres?sslmode=require"
+        "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:6543/postgres?sslmode=require"
     };
 
     private static final String[] DB_USERS = {
+        "postgres.nosmllupbhkcvxcizkkz",
+        "postgres.nosmllupbhkcvxcizkkz",
         "postgres",
-        "postgres.nosmllupbhkcvxcizkkz",
-        "postgres.nosmllupbhkcvxcizkkz",
-        "postgres.nosmllupbhkcvxcizkkz"
+        "postgres"
     };
 
     private static final String DEFAULT_PASSWORD = "lJAGTrWVICfSlXyZ";
