@@ -6,16 +6,18 @@ import java.sql.SQLException;
 
 public class DBConfig {
 
-    // Lista de endpoints de Supabase con usuario postgres estándar en el pooler y conexión directa
+    // Lista de formatos de conexión para Supabase con usuario tenant explícito (postgres.REF)
     private static final String[] DB_URLS = {
         "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:5432/postgres?sslmode=require",
-        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require",
-        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:5432/postgres?sslmode=require"
+        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require&options=reference%3Dnosmllupbhkcvxcizkkz",
+        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:5432/postgres?sslmode=require",
+        "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:6543/postgres?sslmode=require"
     };
 
     private static final String[] DB_USERS = {
-        "postgres",
-        "postgres",
+        "postgres.nosmllupbhkcvxcizkkz",
+        "postgres.nosmllupbhkcvxcizkkz",
+        "postgres.nosmllupbhkcvxcizkkz",
         "postgres"
     };
 
