@@ -47,7 +47,7 @@ public class RegistroServlet extends HttpServlet {
             resp.sendRedirect("index.jsp?registered=true");
         } catch (Exception e) {
             e.printStackTrace();
-            req.setAttribute("error", "No se pudo registrar el usuario. Comprueba si el correo ya existe.");
+            req.setAttribute("error", "Error BD: " + e.getMessage());
             req.getRequestDispatcher("registro.jsp").forward(req, resp);
         }
     }
