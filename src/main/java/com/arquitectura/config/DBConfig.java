@@ -6,17 +6,19 @@ import java.sql.SQLException;
 
 public class DBConfig {
 
-    // Lista de URLs posibles para conectar a Supabase desde la nube
+    // Lista de endpoints de Supabase con timeout explícito y SSL activado
     private static final String[] DB_URLS = {
-        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require",
-        "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:5432/postgres?sslmode=require",
-        "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:5432/postgres?sslmode=disable"
+        "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:5432/postgres?sslmode=require&connectTimeout=10",
+        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require&connectTimeout=10",
+        "jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&connectTimeout=10",
+        "jdbc:postgresql://aws-0-us-west-1.pooler.supabase.com:6543/postgres?sslmode=require&connectTimeout=10"
     };
 
     private static final String[] DB_USERS = {
-        "postgres.nosmllupbhkcvxcizkkz",
         "postgres",
-        "postgres"
+        "postgres.nosmllupbhkcvxcizkkz",
+        "postgres.nosmllupbhkcvxcizkkz",
+        "postgres.nosmllupbhkcvxcizkkz"
     };
 
     private static final String DEFAULT_PASSWORD = "lJAGTrWVICfSlXyZ";
@@ -38,15 +40,15 @@ public class DBConfig {
             return DriverManager.getConnection(envUrl, envUser, password);
         }
 
-        SQLException lastException = null;
+        StringBuilder errorLog = new StringBuilder();
         for (int i = 0; i < DB_URLS.length; i++) {
             try {
                 return DriverManager.getConnection(DB_URLS[i], DB_USERS[i], password);
             } catch (SQLException e) {
-                lastException = e;
+                errorLog.append("[").append(i).append("] ").append(e.getMessage()).append("; ");
             }
         }
 
-        throw lastException != null ? lastException : new SQLException("No se pudo conectar a ninguna URL de Supabase.");
+        throw new SQLException("Fallaron conexiones: " + errorLog.toString());
     }
 }
