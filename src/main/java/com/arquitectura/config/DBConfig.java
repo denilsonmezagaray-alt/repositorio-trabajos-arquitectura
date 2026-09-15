@@ -6,12 +6,10 @@ import java.sql.SQLException;
 
 public class DBConfig {
 
-    // Configuración para conexión con PostgreSQL en Supabase
-    // Ajusta la URL, usuario y contraseña según tu panel de Supabase:
-    // Settings -> Database -> Connection string / Direct Connection
-    private static final String URL = "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:5432/postgres?user=postgres&password=lJAGTrWVICfSlXyZ";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "lJAGTrWVICfSlXyZ";
+    // Configuración JDBC para PostgreSQL en Supabase con SSL activado para la nube (Render)
+    private static final String DEFAULT_URL = "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:5432/postgres?sslmode=require";
+    private static final String DEFAULT_USER = "postgres";
+    private static final String DEFAULT_PASSWORD = "lJAGTrWVICfSlXyZ";
 
     static {
         try {
@@ -22,6 +20,10 @@ public class DBConfig {
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        String url = System.getenv("DB_URL") != null ? System.getenv("DB_URL") : DEFAULT_URL;
+        String user = System.getenv("DB_USER") != null ? System.getenv("DB_USER") : DEFAULT_USER;
+        String password = System.getenv("DB_PASSWORD") != null ? System.getenv("DB_PASSWORD") : DEFAULT_PASSWORD;
+
+        return DriverManager.getConnection(url, user, password);
     }
 }
