@@ -6,19 +6,14 @@ import java.sql.SQLException;
 
 public class DBConfig {
 
-    // Lista de formatos de conexión para Supabase con usuario tenant explícito (postgres.REF)
+    // 1. Direct Domain en puerto 5432 (postgres)
+    // 2. Direct Domain en puerto 6543 (postgres)
+    // 3. Pooler Directo con user=postgres.nosmllupbhkcvxcizkkz
     private static final String[] DB_URLS = {
-        "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:5432/postgres?sslmode=require",
-        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require&options=reference%3Dnosmllupbhkcvxcizkkz",
-        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:5432/postgres?sslmode=require",
-        "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:6543/postgres?sslmode=require"
-    };
-
-    private static final String[] DB_USERS = {
-        "postgres.nosmllupbhkcvxcizkkz",
-        "postgres.nosmllupbhkcvxcizkkz",
-        "postgres.nosmllupbhkcvxcizkkz",
-        "postgres"
+        "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:5432/postgres?sslmode=require&user=postgres",
+        "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:6543/postgres?sslmode=require&user=postgres",
+        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require&user=postgres.nosmllupbhkcvxcizkkz",
+        "jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&user=postgres.nosmllupbhkcvxcizkkz"
     };
 
     private static final String DEFAULT_PASSWORD = "lJAGTrWVICfSlXyZ";
@@ -43,7 +38,7 @@ public class DBConfig {
         StringBuilder errorLog = new StringBuilder();
         for (int i = 0; i < DB_URLS.length; i++) {
             try {
-                return DriverManager.getConnection(DB_URLS[i], DB_USERS[i], password);
+                return DriverManager.getConnection(DB_URLS[i], "postgres", password);
             } catch (SQLException e) {
                 errorLog.append("[").append(i).append("] ").append(e.getMessage()).append("; ");
             }
