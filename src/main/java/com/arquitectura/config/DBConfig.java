@@ -6,19 +6,17 @@ import java.sql.SQLException;
 
 public class DBConfig {
 
-    // Lista de endpoints de Supabase con timeout explícito y SSL activado
+    // Lista de endpoints de Supabase con usuario postgres estándar en el pooler y conexión directa
     private static final String[] DB_URLS = {
-        "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:5432/postgres?sslmode=require&connectTimeout=10",
-        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require&connectTimeout=10",
-        "jdbc:postgresql://aws-0-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&connectTimeout=10",
-        "jdbc:postgresql://aws-0-us-west-1.pooler.supabase.com:6543/postgres?sslmode=require&connectTimeout=10"
+        "jdbc:postgresql://db.nosmllupbhkcvxcizkkz.supabase.co:5432/postgres?sslmode=require",
+        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:6543/postgres?sslmode=require",
+        "jdbc:postgresql://aws-0-sa-east-1.pooler.supabase.com:5432/postgres?sslmode=require"
     };
 
     private static final String[] DB_USERS = {
         "postgres",
-        "postgres.nosmllupbhkcvxcizkkz",
-        "postgres.nosmllupbhkcvxcizkkz",
-        "postgres.nosmllupbhkcvxcizkkz"
+        "postgres",
+        "postgres"
     };
 
     private static final String DEFAULT_PASSWORD = "lJAGTrWVICfSlXyZ";
